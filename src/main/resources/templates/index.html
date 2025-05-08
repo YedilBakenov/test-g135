@@ -8,14 +8,94 @@
 </head>
 <body>
 <div layout:fragment="main-content">
-    <table class="table table-striped">
+    <div class="mt-2">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            + ADD STUDENT
+        </button>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">ADD STUDENT</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add-student" method="post">
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label>FULL NAME: </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="fullName">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label>CITY: </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="city">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label>GPA: </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" name="gpa">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label>AGE: </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input type="number" class="form-control" name="age">
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label>MARK: </label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <select class="form-control" name="mark.id">
+                                        <option th:each="m: ${marks}"
+                                                th:value="${m.id}"
+                                                th:text="${m.gpa + '/' + m.characterGpa}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">ADD STUDENT</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped mt-2">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>FULL NAME</th>
                 <th>CITY</th>
                 <th>AGE</th>
-                <th>GPA</th>
+                <th>MARK</th>
+                <th style="width: 8%">DETAILS</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +104,8 @@
                 <td th:text="${s.fullName}"></td>
                 <td th:text="${s.city}"></td>
                 <td th:text="${s.age}"></td>
-                <td th:text="${s.gpa}"></td>
+                <td th:text="${s.mark.gpa + '/' + s.mark.characterGpa}"></td>
+                <td> <a th:href="@{'/details-student/' + ${s.id}}"  class="btn btn-sm btn-secondary">DETAILS</a>  </td>
             </tr>
         </tbody>
     </table>
